@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rock Paper Scissors</title>
+  <meta charset="UTF-8"/>
+  <script>
+    
+    </script>
+</head>
+<body>
+    <div id="buttons">
+        <button id="rockButton">Rock</button>
+        <button id="paperButton">Paper</button>
+        <button id="scissorsButton">Scissors</button>
+    </div>
+    <div id="results">
+        <p id="playerScore">Player Score: 0</p>
+        <p id="computerScore">Computer Score: 0</p>
+        <p id="comment">Pick one to start</p>
+    </div>
+</body>
+<script>
+    const rockButton = document.querySelector('#rockButton');
+    rockButton.addEventListener('click', () => {
+        singleRound('rock');
+    });
+
+    const paperButton = document.querySelector('#paperButton');
+    paperButton.addEventListener('click', () => {
+        singleRound('paper');
+    });
+
+    const scissorsButton = document.querySelector('#scissorsButton');
+    scissorsButton.addEventListener('click', () => {
+        singleRound('scissors');
+    });
+
+    let playerScore = 0;
+    let computerScore = 0;
+
+    function computerPlay() {
+        let selection = Math.floor(Math.random() * 3);
+        if (selection == 0) {
+            return "rock";
+        }
+        else if (selection == 1) {
+            return "paper";
+        }
+        else {
+            return "scissors";
+        }
+    }
+
+    function singleRound(playerSelection) {
+        if((playerScore < 5) && (computerScore < 5)) {
+            let comment = document.querySelector('#comment');
+            let playerScoreDisplay = document.querySelector('#playerScore');
+            let computerScoreDisplay = document.querySelector('#computerScore');
+            let computerSelection = computerPlay();
+            if (playerSelection == "rock") {
+                if (computerSelection == "rock") {
+                    comment.textContent = "It's a draw!";
+                }
+                else if (computerSelection == "paper") {
+                    comment.textContent = "You lose! Paper beats Rock";
+                    computerScore += 1;
+                    computerScoreDisplay.textContent = `Computer Score: ${computerScore}`;
+                }
+                else {
+                    comment.textContent = "You win! Rock beats scissors";
+                    playerScore += 1;
+                    playerScoreDisplay.textContent = `Player Score: ${playerScore}`;
+                }
+            }
+            else if (playerSelection == "paper") {
+                if (computerSelection == "rock") {
+                    comment.textContent = "You win! Paper beats Rock";
+                    playerScore += 1;
+                    playerScoreDisplay.textContent = `Player Score: ${playerScore}`;
+                }
+                else if (computerSelection == "paper") {
+                    comment.textContent = "It's a draw!";
+                }
+                else {
+                    comment.textContent = "You lose! Scissors beats paper";
+                    computerScore += 1;
+                    computerScoreDisplay.textContent = `Computer Score: ${computerScore}`;
+                }
+            }
+            else {
+                if (computerSelection == "rock") {
+                    comment.textContent = "You lose! Rock beats scissors";
+                    computerScore += 1;
+                    computerScoreDisplay.textContent = `Computer Score: ${computerScore}`;
+                }
+                else if (computerSelection == "paper") {
+                    comment.textContent = "You win! Scissors beats Paper";
+                    playerScore += 1;
+                    playerScoreDisplay.textContent = `Player Score: ${playerScore}`;
+                }
+                else {
+                    comment.textContent = "It's a draw!";
+                }
+            }
+            if(playerScore == 5) {
+                comment.textContent = "Congratulations! You won the game!";
+
+                reset();
+            }
+            else if(computerScore == 5) {
+                comment.textContent = "Hahaha you lost! Better luck next time...";
+                reset();
+            }
+        }
+    }
+    function reset() {
+        let buttons = document.querySelector('#buttons');
+        const resetButton = document.createElement('button');
+        resetButton.classList.add('resetButton');
+        resetButton.textContent = 'Reset';
+        buttons.appendChild(resetButton);
+        resetButton.addEventListener('click', () => {
+            location.reload();
+        });
+    }
+</script>
+</html>
